@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3356702558412290185}
   m_Layer: 0
-  m_Name: SelectionIndicator
+  m_Name: HoverIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3356702558412290185
 Transform:
   m_ObjectHideFlags: 0
@@ -128,9 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221888a7689094439a99845fc548ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoverColor: {r: 0.9804492, g: 0.9811321, b: 0.7080812, a: 0.078431375}
-  NotAvailableColor: {r: 0.8584906, g: 0.2436904, b: 0.10933607, a: 0.078431375}
-  IsTaken: 0
+  HoverIndicator: {fileID: 96909263330332255}
+  SelectIndicator: {fileID: 6595113985182764683}
+  GoodSelection: {r: 1, g: 1, b: 1, a: 0.43137255}
+  BadSelection: {r: 1, g: 0.514151, b: 0.514151, a: 0.43137255}
+  IsActive: 0
   mPositionXY: {x: 0, y: 0}
   mParentSide: {fileID: 0}
 --- !u!64 &-3906179733322019864
@@ -162,7 +164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8201511738895344949
 Transform:
   m_ObjectHideFlags: 0
@@ -189,7 +191,6 @@ GameObject:
   - component: {fileID: 1202970644285940803}
   - component: {fileID: 8850357357584259138}
   - component: {fileID: 4343565481458227965}
-  - component: {fileID: 2305862294060129472}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -206,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 8434419752954671087}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.16, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children: []
   m_Father: {fileID: 8201511738895344949}
   m_RootOrder: 0
@@ -238,7 +239,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30f856ac6232d3045bed2c5c82f86084, type: 2}
+  - {fileID: 2100000, guid: 39efb89efb42ccb41865e52ac139ec58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -260,20 +261,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2305862294060129472
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434419752954671087}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8721166098757364245
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +272,6 @@ GameObject:
   - component: {fileID: 3041596850390798983}
   - component: {fileID: 3373131088196607764}
   - component: {fileID: 6996460327679571095}
-  - component: {fileID: 3768885992943017461}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -356,17 +342,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3768885992943017461
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8721166098757364245}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}

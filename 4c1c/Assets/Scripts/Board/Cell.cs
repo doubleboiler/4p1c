@@ -1,33 +1,46 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
 {
-    public Color HoverColor;
-    public Color NotAvailableColor;
-    public bool IsTaken = false;
+    public GameObject HoverIndicator;
+    public GameObject SelectIndicator;
+    public Color GoodSelection;
+    public Color BadSelection;
+
+    [ReadOnly]
+    public Vector3 Center;
+    [ReadOnly]
+    public float Width;
+    [ReadOnly]
+    public bool IsActive;
+    [ReadOnly]
+    public Vector2 PositionXY = Vector2.zero;
 
     [HideInInspector]
-    public Vector2 mPositionXY = Vector2.zero;
-    [HideInInspector]
-    public Side mParentSide = null;
+    public Side ParentSide = null;
 
-    private Color _statusColor;
+    private byte _ownerId;
+    private Color _startColor;
     private Renderer _renderer;
     private GameManager _gameManager;
 
     void Start()
     {
         _renderer = GetComponent<Renderer>();
-        _statusColor = _renderer.material.color;
+        _startColor = _renderer.material.color;
         _gameManager = GameManager.instance;
+
+        _ownerId = 0;
+
+        Width = _renderer.bounds.size.x;
     }
 
     public void Setup(Side side, Vector2Int positionXY)
     {
-        mPositionXY = positionXY;
-        mParentSide = side;
+        PositionXY = positionXY;
+        ParentSide = side;
+        Center = GetComponent<Renderer>().bounds.center;
     }
 
     private void OnMouseEnter()
@@ -35,18 +48,62 @@ public class Cell : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        _renderer.material.color = HoverColor;
+        IsActive = true;
+        SetCellIndicator(IfCanSelect());
     }
 
     private void OnMouseExit()
     {
-        _renderer.material.color = _statusColor;
+        IsActive = false;
+        SelectIndicator.SetActive(false);
+        HoverIndicator.SetActive(false);
     }
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        if (!IfCanSelect())
+            return;
+
         _renderer.material.color = _gameManager.ActivePlayer.Color;
-        _statusColor = _gameManager.ActivePlayer.Color;
-        _gameManager.NextPlayer();
+        _ownerId = _gameManager.ActivePlayer.Id;
+
+        SetCellIndicator(IfCanSelect());
+
+        _gameManager.CellGotSelected();
+    }
+
+    private void SetCellIndicator(bool canSelect)
+    {
+        var nowColor = canSelect ? GoodSelection : BadSelection;
+
+        var hoverRenderer = HoverIndicator.GetComponentInChildren<Renderer>();
+        if (hoverRenderer != null)
+        {
+            hoverRenderer.material.color = new Color(nowColor.r, nowColor.g, nowColor.b, 110f/255f);
+            HoverIndicator.SetActive(true);
+        }
+
+        var selectRenderer = SelectIndicator.GetComponentInChildren<Renderer>();
+        if (selectRenderer != null)
+        {
+            selectRenderer.material.color = new Color(nowColor.r, nowColor.g, nowColor.b, 1f);
+            SelectIndicator.SetActive(true);
+        }
+    }
+
+    private bool IfCanSelect()
+    {
+        return _gameManager.ActivePlayer.Id != _ownerId;
+    }
+
+    public void UpdateStatus()
+    {
+        if (IsActive)
+        {
+            SetCellIndicator(IfCanSelect());
+        }
     }
 }

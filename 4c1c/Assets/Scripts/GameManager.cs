@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public Side mSide;
+    private const int moves_amount = 3;
+    private int _currentPlayerNumber;
+    private int _currentPlayerMove;
 
     [HideInInspector]
     public List<Player> Players;
 
     public Player ActivePlayer;
-
-    private int _currentPlayerNumber;
 
     private void Awake()
     {
@@ -29,22 +27,25 @@ public class GameManager : MonoBehaviour
     {
         SetupPlayers();
 
-        mSide.Setup();
+        BoardManager.instance.GenerateBoard();
+
+        PlayersManager.instance.CreateMainPlayer(ActivePlayer.Color, BoardManager.instance.ActiveSide);
     }
 
     private void SetupPlayers()
     {
         Players = new List<Player>();
 
-        Players.Add(new Player("Красный", Color.red));
-        Players.Add(new Player("Синий", Color.blue));
+        Players.Add(new Player(1, "Красный", Color.red));
+        Players.Add(new Player(2, "Синий", Color.blue));
 
         _currentPlayerNumber = 0;
+        _currentPlayerMove = 0;
 
         ActivePlayer = Players[_currentPlayerNumber];
     }
 
-    public void NextPlayer()
+    public void SwitchPlayer()
     {
         if (_currentPlayerNumber + 1 <= Players.Count - 1)
         {
@@ -56,5 +57,16 @@ public class GameManager : MonoBehaviour
         }
 
         ActivePlayer = Players[_currentPlayerNumber];
+        _currentPlayerMove = 0;
+    }
+
+    public void CellGotSelected()
+    {
+        _currentPlayerMove++;
+
+        if (_currentPlayerMove == moves_amount)
+        {
+            SwitchPlayer();
+        }
     }
 }
