@@ -3,11 +3,11 @@
 public class DiceGlow : MonoBehaviour
 {
     [SerializeField] private GameObject[] sidesF;
-    private DiceStat diceStat;
+    private DiceMove diceStat;
 
     void Start()
     {
-        diceStat = gameObject.GetComponent<DiceStat>();
+        diceStat = gameObject.GetComponent<DiceMove>();
     }
 
     void Update()
