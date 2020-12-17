@@ -456,7 +456,7 @@ Transform:
   m_GameObject: {fileID: 1216544497}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20, y: 5, z: 0}
-  m_LocalScale: {x: 0.1, y: 10, z: 40}
+  m_LocalScale: {x: 0.1, y: 100, z: 40}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -581,7 +581,7 @@ Transform:
   m_GameObject: {fileID: 1331990247}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 5, z: -20}
-  m_LocalScale: {x: 0.1, y: 10, z: 40}
+  m_LocalScale: {x: 0.1, y: 100, z: 40}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -596,12 +596,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1406204161}
   - component: {fileID: 1406204163}
+  - component: {fileID: 1406204162}
   - component: {fileID: 1406204166}
   - component: {fileID: 1406204165}
   - component: {fileID: 1406204164}
   m_Layer: 0
   m_Name: DiceLowPolyModel
-  m_TagString: Untagged
+  m_TagString: Dice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -622,6 +623,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 72.477, y: 27.358, z: 30.573}
+--- !u!114 &1406204162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406204160}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba24ce97ec0c2445b2fa71dc9ba723d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1406204163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +681,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -707,7 +720,7 @@ GameObject:
   - component: {fileID: 1615603452}
   m_Layer: 0
   m_Name: EmptySides
-  m_TagString: Untagged
+  m_TagString: Dice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -884,7 +897,7 @@ Transform:
   m_GameObject: {fileID: 1872613744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20, y: 5, z: 0}
-  m_LocalScale: {x: 0.1, y: 10, z: 40}
+  m_LocalScale: {x: 0.1, y: 100, z: 40}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -979,7 +992,7 @@ Transform:
   m_GameObject: {fileID: 1884778425}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 5, z: 20}
-  m_LocalScale: {x: 0.1, y: 10, z: 40}
+  m_LocalScale: {x: 0.1, y: 100, z: 40}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1196,13 +1209,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018232801}
-  m_LocalRotation: {x: 0.4409031, y: 0.552815, z: -0.4409031, w: 0.552815}
-  m_LocalPosition: {x: -2, y: 20, z: 0}
+  m_LocalRotation: {x: 0.4188561, y: 0.5697013, z: -0.4188561, w: 0.5697013}
+  m_LocalPosition: {x: -5.3, y: 20, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 77.149, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 72.648, y: 90, z: 0}
 --- !u!1 &2040377081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,6 +1354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dice8
       objectReference: {fileID: 0}
+    - target: {fileID: 353139988765067351, guid: a19e9cc7367e2fa43b52315ab9fe80a0, type: 3}
+      propertyPath: m_TagString
+      value: Dice
+      objectReference: {fileID: 0}
     - target: {fileID: 1129640851155423981, guid: a19e9cc7367e2fa43b52315ab9fe80a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1399,7 +1416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092077125611998606, guid: a19e9cc7367e2fa43b52315ab9fe80a0, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4092077125611998606, guid: a19e9cc7367e2fa43b52315ab9fe80a0, type: 3}
       propertyPath: m_Mesh

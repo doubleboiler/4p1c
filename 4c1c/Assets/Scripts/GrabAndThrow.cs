@@ -2,39 +2,49 @@
 
 public class GrabAndThrow : MonoBehaviour
 {
-    float grabbedObjectSize;
+    float distance;
     Vector3 previousPos;
     GameObject grabbedObject;
 
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(1))
+        
+        if (Input.GetMouseButtonDown(0))
         {
             if (grabbedObject == null)
             {
-                TryGrabObject(GetMouseHoverObject(1000));
+                TryGrabObject(GetMouseHoverObject());
             }
             else
                 DropObject();
         }
 
-        if(grabbedObject != null)
+        if (grabbedObject != null)
         {
             previousPos = grabbedObject.transform.position;
-            Vector3 newPos = gameObject.transform.position + Camera.main.transform.forward * grabbedObjectSize;
+            Vector3 newPos = Camera.main.transform.position + Camera.main.ScreenPointToRay(Input.mousePosition).direction * distance;
             grabbedObject.transform.position = newPos;
         }
     }
 
-    GameObject GetMouseHoverObject(float range)
+    GameObject GetMouseHoverObject()
     {
-        Vector3 pos = gameObject.transform.position;
-        RaycastHit raycastHit;
-        Vector3 target = pos + Camera.main.transform.forward * range;
+        //Vector3 pos = gameObject.transform.position;
 
-        if (Physics.Linecast(pos, target, out raycastHit))
-            return raycastHit.collider.gameObject;
+        RaycastHit raycastHit;
+
+        //Vector3 target = pos + Camera.main.ScreenPointToRay(Input.mousePosition).direction * range;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out raycastHit))
+        {
+            if (raycastHit.collider.gameObject.tag == "Dice")
+                return raycastHit.collider.gameObject;
+        }
+
+        //if (Physics.Linecast(pos, target, out raycastHit))
+        //    return raycastHit.collider.gameObject;
 
         return null;
     }
@@ -45,7 +55,7 @@ public class GrabAndThrow : MonoBehaviour
             return;
 
         grabbedObject = grabObject;
-        grabbedObjectSize = grabbedObject.GetComponent<MeshRenderer>().bounds.size.magnitude;
+        distance = Vector3.Distance(grabbedObject.transform.position, Camera.main.transform.position);
         grabbedObject.GetComponent<Rigidbody>().useGravity = false;
     }
 
