@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayersManager : MonoBehaviour
 {
     public static PlayersManager instance;
     public GameObject MainPlayerPrefab;
+
+    private List<Player> _playersList;
 
     private void Awake()
     {
@@ -15,15 +18,48 @@ public class PlayersManager : MonoBehaviour
         instance = this;
     }
 
-    public void CreateMainPlayer(Color playerColor, Side activeSide)
+    private void Start()
     {
-        GameObject mainPlayerObject = Instantiate(MainPlayerPrefab);
-        mainPlayerObject.transform.SetParent(activeSide.transform);
+        _playersList = new List<Player>();
+    }
 
-        mainPlayerObject.transform.localScale = new Vector3(1, 0.5f, 1);
-        mainPlayerObject.transform.localRotation = Quaternion.identity;
-        mainPlayerObject.transform.position = activeSide.Cells[2,2].Center;
+    public void CreatePlayer(Side activeSide, List<GamePlayer> gamePlayersForPlayer)
+    {
+        GameObject playerObject = Instantiate(MainPlayerPrefab);
+        playerObject.transform.localScale = new Vector3(1f, 1f, 1f);
 
-        //mainPlayerObject.transform.
+        Player playerForObject = playerObject.GetComponent<Player>();
+        _playersList.Add(playerForObject);
+
+        foreach (var gamePlayer in gamePlayersForPlayer)
+        {
+            playerForObject.AddGamePlayerToPlayer(gamePlayer);
+        }
+
+        MovePlayer(playerObject, activeSide);
+    }
+
+    private void MovePlayer(GameObject playerObject, Side activeSide)
+    {
+        GameObject cellObject = activeSide.Cells[2, 2].gameObject;
+        Vector3 cellPosition = cellObject.transform.position;
+        Quaternion cellRotation = cellObject.transform.rotation;
+
+        var playerHeight = playerObject.GetComponent<Renderer>().bounds.size.y;
+        var cellHeight = cellObject.GetComponent<Renderer>().bounds.size.y;
+
+        playerObject.transform.position = cellPosition + new Vector3(0, playerHeight / 2, 0) + new Vector3(0, cellHeight / 2, 0);
+        playerObject.transform.rotation = cellRotation;
+    }
+
+    public void StartMove(int id)
+    {
+        foreach (var player in _playersList)
+        {
+            if (player.FindGamePlayer(id) != null)
+            {
+                player.StartMove(id);
+            }
+        }
     }
 }

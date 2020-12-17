@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Side : MonoBehaviour
 {
-    private const float TILE_SIZE = 1.0f;
+    private const float TILE_SIZE = 2.0f;
     private const float TILE_OFFSET = TILE_SIZE/2;
 
     public GameObject CellPrefab;
@@ -43,9 +43,9 @@ public class Side : MonoBehaviour
             for (int j = 0; j < 5; j++)
             {
                 GameObject cell = Instantiate(CellPrefab, transform.position, transform.rotation);
-
-                Transform cellTransform = cell.GetComponent<Transform>();
-                cellTransform.localPosition = _mainCorner + new Vector3((i * TILE_SIZE) + TILE_OFFSET, 0, (j * TILE_SIZE) + TILE_OFFSET);
+                cell.transform.SetParent(transform);
+                //cell.transform.localScale = new Vector3(2, 0.1f, 2);
+                cell.transform.localPosition = _mainCorner + new Vector3((i * TILE_SIZE) + TILE_OFFSET, 0, (j * TILE_SIZE) + TILE_OFFSET);
 
                 Cells[i, j] = cell.GetComponent<Cell>();
                 Cells[i, j].Setup(this, new Vector2Int(i, j));

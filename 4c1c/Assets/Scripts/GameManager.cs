@@ -8,10 +8,16 @@ public class GameManager : MonoBehaviour
     private int _currentPlayerNumber;
     private int _currentPlayerMove;
 
-    [HideInInspector]
-    public List<Player> Players;
+    [ReadOnly]
+    public GamePhase ActiveGamePhase;
 
-    public Player ActivePlayer;
+    [HideInInspector]
+    public List<GamePlayer> Players;
+
+    public GamePlayer ActivePlayer;
+
+    private BoardManager _boardManager;
+    private PlayersManager _playersManager;
 
     private void Awake()
     {
@@ -25,39 +31,34 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _boardManager = BoardManager.instance;
+        _playersManager = PlayersManager.instance;
+
+        _boardManager.GenerateBoard();
+
         SetupPlayers();
-
-        BoardManager.instance.GenerateBoard();
-
-        PlayersManager.instance.CreateMainPlayer(ActivePlayer.Color, BoardManager.instance.ActiveSide);
     }
 
     private void SetupPlayers()
     {
-        Players = new List<Player>();
+        Players = new List<GamePlayer>();
 
-        Players.Add(new Player(1, "Красный", Color.red));
-        Players.Add(new Player(2, "Синий", Color.blue));
+        Players.Add(new GamePlayer(1, "Красный", Color.red));
+        Players.Add(new GamePlayer(2, "Синий", Color.blue));
 
-        _currentPlayerNumber = 0;
-        _currentPlayerMove = 0;
+        SetupTwoInOne();
+    }
 
-        ActivePlayer = Players[_currentPlayerNumber];
+    private void SetupTwoInOne()
+    {
+        _playersManager.CreatePlayer(_boardManager.ActiveSide, Players);
     }
 
     public void SwitchPlayer()
     {
-        if (_currentPlayerNumber + 1 <= Players.Count - 1)
-        {
-            _currentPlayerNumber++;
-        }
-        else
-        {
-            _currentPlayerNumber = 0;
-        }
-
-        ActivePlayer = Players[_currentPlayerNumber];
         _currentPlayerMove = 0;
+
+        //_playersManager.StartMove();
     }
 
     public void CellGotSelected()
@@ -68,5 +69,26 @@ public class GameManager : MonoBehaviour
         {
             SwitchPlayer();
         }
+    }
+
+    private void RotationPhaseActions()
+    {
+        ActiveGamePhase = GamePhase.Rotation;
+
+
+    }
+
+    private void MovementPhaseActions()
+    {
+        ActiveGamePhase = GamePhase.Movement;
+
+
+    }
+
+    private void CarpetingPhaseActions()
+    {
+        ActiveGamePhase = GamePhase.Carpeting;
+
+
     }
 }

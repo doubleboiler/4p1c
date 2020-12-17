@@ -9,8 +9,6 @@ public class Cell : MonoBehaviour
     public Color BadSelection;
 
     [ReadOnly]
-    public Vector3 Center;
-    [ReadOnly]
     public float Width;
     [ReadOnly]
     public bool IsActive;
@@ -24,6 +22,11 @@ public class Cell : MonoBehaviour
     private Color _startColor;
     private Renderer _renderer;
     private GameManager _gameManager;
+
+    private bool IsSelectable
+    {
+        get { return _gameManager.ActivePlayer.Id != _ownerId; }
+    }
 
     void Start()
     {
@@ -40,7 +43,6 @@ public class Cell : MonoBehaviour
     {
         PositionXY = positionXY;
         ParentSide = side;
-        Center = GetComponent<Renderer>().bounds.center;
     }
 
     private void OnMouseEnter()
@@ -48,12 +50,18 @@ public class Cell : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
+        if (_gameManager.ActiveGamePhase != GamePhase.Carpeting)
+            return;
+
         IsActive = true;
-        SetCellIndicator(IfCanSelect());
+        SetCellIndicator(IsSelectable);
     }
 
     private void OnMouseExit()
     {
+        if (_gameManager.ActiveGamePhase != GamePhase.Carpeting && !IsActive)
+            return;
+
         IsActive = false;
         SelectIndicator.SetActive(false);
         HoverIndicator.SetActive(false);
@@ -64,13 +72,16 @@ public class Cell : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!IfCanSelect())
+        if (_gameManager.ActiveGamePhase != GamePhase.Carpeting)
+            return;
+
+        if (!IsSelectable)
             return;
 
         _renderer.material.color = _gameManager.ActivePlayer.Color;
         _ownerId = _gameManager.ActivePlayer.Id;
 
-        SetCellIndicator(IfCanSelect());
+        SetCellIndicator(IsSelectable);
 
         _gameManager.CellGotSelected();
     }
@@ -94,16 +105,13 @@ public class Cell : MonoBehaviour
         }
     }
 
-    private bool IfCanSelect()
-    {
-        return _gameManager.ActivePlayer.Id != _ownerId;
-    }
+    
 
     public void UpdateStatus()
     {
         if (IsActive)
         {
-            SetCellIndicator(IfCanSelect());
+            SetCellIndicator(IsSelectable);
         }
     }
 }

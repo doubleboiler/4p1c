@@ -1,20 +1,78 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Player
+public class Player : MonoBehaviour
 {
-    public byte Id;
+    public GameObject Hat;
 
-    public string NickName;
+    public GameObject[] Arrows;
 
-    public Color Color;
-
+    [ReadOnly]
+    public Vector3 CurrentDirection;
+    [ReadOnly]
     public Cell CurrentCell;
+    [ReadOnly]
     public Cell OriginalCell;
 
-    public Player(byte id, string name, Color color)
+    private List<GamePlayer> _gamePlayers;
+    private GamePlayer _activeGamePlayer;
+
+    public void Start()
     {
-        Id = id;
-        NickName = name;
-        Color = color;
+        _gamePlayers = new List<GamePlayer>();
+
+        EnableAllArrows();
+        CurrentDirection = transform.forward;
+    }
+
+    public void ArrowPressed(PlayerArrow pressedArrow)
+    {
+        RotatePlayer(pressedArrow.DegreeRotation);
+        DisableAllArrows();
+    }
+
+    private void RotatePlayer(float rotation)
+    {
+        transform.Rotate(0, rotation, 0, Space.Self);
+        CurrentDirection = transform.forward;
+    }
+
+    private void DisableAllArrows()
+    {
+        foreach (var arrowObject in Arrows)
+        {
+            arrowObject.SetActive(false);
+        }
+    }
+
+    private void EnableAllArrows()
+    {
+        foreach (var arrowObject in Arrows)
+        {
+            arrowObject.SetActive(true);
+        }
+    }
+
+    public void StartMove(int id)
+    {
+        _activeGamePlayer = FindGamePlayer(id);
+
+        if (_activeGamePlayer == null)
+            return;
+
+        Hat.GetComponent<Renderer>().material.color = _activeGamePlayer.Color;
+
+        EnableAllArrows();
+    }
+
+    public void AddGamePlayerToPlayer(GamePlayer gamePlayer)
+    {
+        _gamePlayers.Add(gamePlayer);
+    }
+
+    public GamePlayer FindGamePlayer(int id)
+    {
+        return _gamePlayers.Find(e => e.Id == id);
     }
 }

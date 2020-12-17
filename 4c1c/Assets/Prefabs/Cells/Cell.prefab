@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 4202653219288600740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children:
   - {fileID: 3356702558412290185}
   - {fileID: 8201511738895344949}
@@ -132,9 +132,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 6595113985182764683}
   GoodSelection: {r: 1, g: 1, b: 1, a: 0.43137255}
   BadSelection: {r: 1, g: 0.514151, b: 0.514151, a: 0.43137255}
+  Width: 0
   IsActive: 0
-  mPositionXY: {x: 0, y: 0}
-  mParentSide: {fileID: 0}
+  PositionXY: {x: 0, y: 0}
+  ParentSide: {fileID: 0}
 --- !u!64 &-3906179733322019864
 MeshCollider:
   m_ObjectHideFlags: 0
