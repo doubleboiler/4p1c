@@ -9,16 +9,16 @@ public class ScoreManager : MonoBehaviour
 	static int defaultScore = 120;
 	int changeCounter = 0;
 
-    void Awake()
-    {
-		if (instance != null)
-		{
-			Debug.Log("More than one instance of " + nameof(ScoreManager) + " in the scene");
-			return;
-		}
+ //   void Awake()
+ //   {
+	//	if (instance != null)
+	//	{
+	//		Debug.Log("More than one instance of " + nameof(ScoreManager) + " in the scene");
+	//		return;
+	//	}
 
-		instance = this;
-	}
+	//	instance = this;
+	//}
 
     void Start()
 	{

@@ -12,9 +12,9 @@ public class PlayerScoreEntry : MonoBehaviour
 		scoreManager = ScoreManager.instance;
 	}
 
-	public void SetPlayerInfo(string name)
+	public void SetPlayerInfo(string name, int score)
     {
 		entryNameText.text = name;
-		entryScoreText.text = scoreManager.GetScore(name).ToString();
+		entryScoreText.text = score.ToString();
 	}
 }
